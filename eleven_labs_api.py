@@ -18,7 +18,7 @@ def save_audio_to_file(audio_data):
 def get_eleven_labs_response(response):
     audio = generate(
     text = response,
-    voice="British Man With a Deep Voice and Subtle Accent",
+    voice="King Henry",
     model="eleven_monolingual_v1"
     )
     save_audio_to_file(audio)

@@ -7,7 +7,7 @@ openai.api_key = "Your API key"
 
 # Define function to get GPT response
 def get_gpt_response(user_input):
-    # Hardcoded file name for the chat history
+    # File name for the chat history
     chat_history_file = "chat_history.json"
     
     try:
