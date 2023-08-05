@@ -1,50 +1,51 @@
-import tkinter as tk
 import pyaudio
 import wave
+import threading
 import whisper_api
 import gpt_api
 import eleven_labs_api
 import os
-import json
+import sys
 from elevenlabs import play
 
 class DungeonBot:
-    def __init__(self, master):
-        self.master = master
-        self.master.title("DungeonBot")
-
+    def __init__(self):
+        os.system('cls') # clear the console
         self.recording = False
-        self.frames = []
-        self.chat_history = []
-
-        self.chat_box = tk.Text(master, wrap=tk.WORD, width=60, height=20, font=("Courier", 12))
-        self.chat_box.pack(pady=20)
-
-        self.record_button = tk.Button(
-            master, text="Start Recording", command=self.start_recording
-        )
-        self.record_button.pack(pady=1)
-
-        self.stop_button = tk.Button(
-            master, text="Stop Recording", command=self.stop_recording
-        )
-        self.stop_button.pack(pady=10)
-        os.system('cls')
-
-    def start_recording(self):
-        self.audio = pyaudio.PyAudio()  # create audio object for mic input
+        self.frames = [] # list of audio frames
+        self.audio = pyaudio.PyAudio()
         self.stream = self.audio.open(
             format=pyaudio.paInt16,
             channels=1,
             rate=44100,
             input=True,
             frames_per_buffer=1024,
-        )  # open audio stream
-        self.frames = []  # list to store audio frames
-        self.recording = True
+        )
 
-        print("Recording...")
-        
+    def start_recording(self):
+        self.frames = []
+        self.recording = True
+        self.audio = pyaudio.PyAudio()
+        self.stream = self.audio.open(
+            format=pyaudio.paInt16,
+            channels=1,
+            rate=44100,
+            input=True,
+            frames_per_buffer=1024,
+        )
+        print("Recording (q to stop)...")
+
+        # Start a new thread for recording
+        threading.Thread(target=self.record).start()
+
+    def record(self):
+        while self.recording:
+            try:
+                data = self.stream.read(1024)  # read audio data from stream in 1024 byte chunks
+                self.frames.append(data)  # add audio frame to list
+            except KeyboardInterrupt:
+                self.stop_recording()
+
     def stop_recording(self):
         if self.recording:
             self.recording = False
@@ -61,47 +62,59 @@ class DungeonBot:
             sound_file.writeframes(b"".join(self.frames))
             sound_file.close()
 
-            print("Transcribing...")
-            result = whisper_api.get_whisper_response()
-            print(result["text"])
+    def transcribe(self):
+        print("Transcribing...")
+        result = whisper_api.get_whisper_response()
+        text = result["text"].lstrip() # Remove leading whitespace
+        print(text)  # Print the transcription result
 
-            self.update_chat_history()
- 
-            print("Generating response...")
-            response = gpt_api.get_gpt_response(result["text"])
-            print(response)
+        while True:
+            answer = input("Is the transcription correct? (y/n): ")
+            if answer.lower() == "y":
+                print("Generating response...")
+                response = gpt_api.get_gpt_response(result["text"])
+                print(response)
 
-            self.update_chat_history()
+                print("Generating audio...")
+                audio = eleven_labs_api.get_eleven_labs_response(response)
+                print("Playing audio...")
+                play(audio)
+                print("Finished playing audio.")
 
-            print("Generating audio...")
-            audio = eleven_labs_api.get_eleven_labs_response(response)
-            print("Playing audio...")
-            play(audio)
+                while True:
+                    inp = input("Press p to start recording, r to hear the audio again, and q to quit\n")
+                    if inp.lower() == "p":
+                        self.start_recording()
+                        return  # Exit the transcribe method and let it start over
+                    elif inp.lower() == "r":
+                        play(audio)
+                    elif inp.lower() == "q":
+                        # exit the program
+                        print("Exiting...")
+                        sys.exit()
+                    else:
+                        print("Invalid input. Try again.")
 
-            
-
-    def update_chat_history(self):
-        self.chat_box.delete(1.0, tk.END)
-        for sender, message in self.chat_history:
-            frame = tk.Frame(self.chat_box, bg="lightblue" if sender == "You" else "lightgreen", bd=5)
-            frame.pack(fill=tk.X, padx=5, pady=2, anchor=tk.W if sender == "You" else tk.E)
-            label = tk.Label(frame, text=f"{sender}: {message}", wraplength=500, bg=frame["bg"], fg="white", font=("Arial", 12))
-            label.pack(side=tk.TOP, anchor=tk.W)
-            self.chat_box.window_create(tk.END, window=frame)
+            elif answer.lower() == "n":
+                self.start_recording()  # Start recording again
+                break
 
     def update(self):
-        if self.recording:
-            try:
-                data = self.stream.read(1024)  # read audio data from stream in 1024 byte chunks
-                self.frames.append(data)  # add audio frame to list
-            except KeyboardInterrupt:
-                self.stop_recording()
+        self.update()
 
-        self.master.after(10, self.update)
+def main():
+    bot = DungeonBot()
+    print("Press p to start recording")
+    while True:
+        inp = input("")
 
+        if inp.lower() == "p":
+            bot.start_recording()
+        elif inp.lower() == "q":
+            bot.stop_recording()
+            bot.transcribe()
+        else:
+            print("Invalid input.")
 
 if __name__ == "__main__":
-    root = tk.Tk()
-    app = DungeonBot(root)
-    root.after(10, app.update)
-    root.mainloop()
+    main()
