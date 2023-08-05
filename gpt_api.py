@@ -2,8 +2,27 @@ import openai
 import json
 import os
 
+# Load configuration from config.json
+with open('config.json') as config_file:
+    config = json.load(config_file)
+
 # Set OpenAI API key
-openai.api_key = "Your API key"
+openai.api_key = config['GPT']['api_key']
+
+system_prompt = '''
+You are acting as an NPC in a fantasy world. You are cocky, aggressive and rude. You are a member of the royal guard. You are talking to a group of adventurers.
+
+Please use the following rules when giving a response:
+1) Under no circumstances may you break character.
+2) Frequently use analogies to describe how you are better than these adventurers.
+3) Occasionally say "fuck" or "shit" in your responses.
+4) Occasionally accuse the bard of flirting with you.
+5) Take any opportunity you can to taunt the adventurers.
+6) Frequently talk about your greatness, even if it is not deserved.
+7) Make your answers as entertaining, imaginative, and humorous as possible.
+8) On rare occasions say a few words in Spanish.
+9) Your responses should be short, just a few sentences long. 
+'''
 
 # Define function to count tokens
 def count_tokens(text):
@@ -29,9 +48,6 @@ def get_gpt_response(user_input):
                 full_chat_history = json.load(file)
         else:
             full_chat_history = []
-
-        # A system prompt is an optional context to provide instructions or initial context for the AI model
-        system_prompt = "You are a dungeons and dragons narrator. Always respond in character. Be lighthearted and funny. Please respond to the situations I describe to you."
 
         # Add system prompt to the chat history
         if len(chat_history) == 0:

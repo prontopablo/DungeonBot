@@ -1,0 +1,9 @@
+{
+    "GPT": {
+      "api_key": "Your API key"
+    },
+    "eleven_labs": {
+      "api_key": "Your API key",
+      "voice": "Victoria"  
+    }
+}
