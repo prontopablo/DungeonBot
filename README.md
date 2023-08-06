@@ -1,12 +1,14 @@
 # DungeonBot
 
-<img align="left" width="300" height="300" src="https://github.com/prontopablo/DungeonBot/assets/55544101/896df0e9-c9b5-4f4a-aa9a-9b95a28b6106">
+<img align="left" width="400" height="400" src="https://github.com/prontopablo/DungeonBot/assets/55544101/896df0e9-c9b5-4f4a-aa9a-9b95a28b6106">
 
 ## Introduction
 
-DungeonBot is a little program designed to enhance your roleplaying game experience, specifically tailored for games like Dungeons & Dragons. This is ideal for NPCs/Narrators as you can interact with GPT-3.5-Turbo using microphone input and it provides you with very specific, tailored responses with all the details of your world. DungeonBot uses the ElevenLabs voice of your choice to bring GPT's responses to life, making your sessions even more engaging and often (unintentionally) funny.
+DungeonBot is a little program designed to enhance your roleplaying game (D&D) experience. This is ideal for NPCs/Narrators as you can interact with GPT-3.5-Turbo using mic input and it provides you with tailored responses with all the details of your world. DungeonBot uses the ElevenLabs voice of your choice to bring GPT's responses to life, making your sessions even more engaging and often (unintentionally) funny.
 
-You give the AI context about your world and instructions on how to behave such as "You are in Middle Earth and are a cocky, aggressive dwarf", use your mic and get a spoken response in character from the AI (You can choose from many voices from ElevenLabs). It also keeps a chat history so the AI can remember things you've previously said (in the full_chat_history.json file)
+You give the AI context and instructions such as "You are in Middle Earth and are a cocky, aggressive dwarf", use your mic and get a spoken response in character from the AI (You can choose from many voices from ElevenLabs). It also keeps a chat history so the AI can remember things you've previously said (full_chat_history.json)
+
+<br>
 
 ## Installation
 
