@@ -4,15 +4,26 @@
 
 ## Introduction
 
-DungeonBot is a little program designed to enhance your roleplaying game (D&D) experience. This is ideal for NPCs/Narrators as you can interact with GPT-3.5-Turbo using mic input and it provides you with tailored responses with all the details of your world. DungeonBot uses the ElevenLabs voice of your choice to bring GPT's responses to life, making your sessions even more engaging and often (unintentionally) funny.
+DungeonBot is a little program designed to enhance your roleplaying game (D&D) experience. This is ideal for NPCs/Narrators as you can interact with an AI (GPT-3.5-Turbo) using mic input and it provides you with tailored responses with all the details of your world. DungeonBot uses the ElevenLabs voice of your choice to bring the AI's responses to life, making your sessions even more engaging and often (unintentionally) funny.
 
 You give the AI context and instructions such as "You are in Middle Earth and are a cocky, aggressive dwarf", use your mic and get a spoken response in character from the AI (You can choose from many voices from ElevenLabs). It also keeps a chat history so the AI can remember things you've previously said (full_chat_history.json)
 
 <br>
+<br>
+
+## Demo
+
+
+https://github.com/prontopablo/DungeonBot/assets/55544101/90df9374-af0d-49f2-a4c2-bcd11b140bdd
+
+_(Sound on)_
 
 ## Installation
 
+_Note: Hopefully this is accessible for non-technical people, but if not, you can copy/paste these instructions into ChatGPT and have it guide you through the install!_
+
 Follow these steps to set up DungeonBot:
+
 
 1. **Download this project:**
 Download this project by clicking the green code button in the top right and clicking "Download ZIP":
@@ -38,11 +49,11 @@ Open command prompt in the project folder and install the required dependencies:
 
 <br> 
 
-4. **Get API Keys:** To interact with the GPT-3.5-Turbo model and use ElevenLabs' voice, you need API keys. You can obtain these keys by signing up for access to [GPT-3.5-Turbo](https://beta.openai.com/signup/) and [ElevenLabs](https://elevenlabs.io/). Here you can choose the voice you want to use.
+4. **Get API Keys:** To interact with the AI (GPT-3.5-Turbo) and use the AI voice (ElevenLabs), you need API keys (you can think of these as personal account keys). You can obtain these keys by signing up to [GPT-3.5-Turbo](https://beta.openai.com/signup/) and [ElevenLabs](https://elevenlabs.io/). Here you can choose the voice you want to use.
 
 <br>
 
-5. **Configure API Keys:** Edit the "config.json" file in the project directory and add your API keys (Once you've added a voice to your voice library you can also change it to that here):
+5. **Configure API Keys:** Edit the "config.json" file using a text editor and add your API keys (Once you've added a voice to your voice library you can also change it to that here):
    ```env
 
     "GPT": {
@@ -82,6 +93,14 @@ Open command prompt in the project folder and install the required dependencies:
 
 I welcome contributions from the community to make DungeonBot better. If you have any suggestions, bug fixes, or new features to add, feel free to create a pull request.
 
-## License
+## Responses
+Some examples of the responses provided by DungeonBot:
 
+
+https://github.com/prontopablo/DungeonBot/assets/55544101/6ce943c0-4d20-45fc-a54a-d15f4e9633c0
+
+## Credit
+This project uses the GPT-3.5-Turbo API to generate text responses and the ElevenLabs API to generate the audio for those responses.
+
+## License
 This project is licensed under the MIT License.
