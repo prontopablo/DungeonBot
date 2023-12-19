@@ -85,7 +85,3 @@ I welcome contributions from the community to make DungeonBot better. If you hav
 ## License
 
 This project is licensed under the MIT License.
-
----
-
-DungeonBot is developed and maintained by [prontopablo](https://github.com/prontopablo). If you find this project helpful or interesting, consider giving it a star and sharing it with your RPG-loving friends!
